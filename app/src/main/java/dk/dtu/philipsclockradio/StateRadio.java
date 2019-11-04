@@ -17,6 +17,8 @@ public class StateRadio extends StateAdapter {
     // true er FM og false er AM.
     private boolean radioMode = true;
 
+    private int presetNumber = 0;
+
     // Radio: on.
     @Override
     public void onEnterState(ContextClockradio context) {
@@ -138,6 +140,41 @@ public class StateRadio extends StateAdapter {
                     break;
                 }
 
+                context.ui.setDisplayText("" + AMCurrentFreq);
+            }
+        }
+    }
+
+    // Start preset state.
+    @Override
+    public void onLongClick_Preset(ContextClockradio context) {
+        if (radioMode == true)
+            context.setState(new StatePresetFM(FMCurrentFreq));
+        else
+            context.setState(new StatePresetAM(AMCurrentFreq));
+    }
+
+    // Vælg preset.
+    @Override
+    public void onClick_Preset(ContextClockradio context) {
+        // FM
+        if (radioMode == true) {
+            presetNumber++;
+            if (presetNumber == 21)
+                presetNumber = 1;
+
+            if (context.singletonPresets.getFMPreset(presetNumber) < FMMaxFreq && context.singletonPresets.getFMPreset(presetNumber) > FMMinFreq){
+                FMCurrentFreq = context.singletonPresets.getFMPreset(presetNumber);
+                context.ui.setDisplayText("" + FMCurrentFreq);
+            }
+        } // AM
+        else {
+            presetNumber++;
+            if (presetNumber == 21)
+                presetNumber = 1;
+
+            if (context.singletonPresets.getAMPreset(presetNumber) < AMMaxFreq && context.singletonPresets.getAMPreset(presetNumber) > AMMinFreq){
+                AMCurrentFreq = context.singletonPresets.getAMPreset(presetNumber);
                 context.ui.setDisplayText("" + AMCurrentFreq);
             }
         }
