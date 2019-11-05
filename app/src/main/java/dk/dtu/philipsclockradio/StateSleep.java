@@ -10,8 +10,6 @@ public class StateSleep extends StateAdapter {
     private Date mTime;
     private static Handler mHandler = new Handler();
     private ContextClockradio mContext;
-    long startTime;
-    long idleTime = 5;
 
     StateSleep(Date time){
         this.mTime = time;

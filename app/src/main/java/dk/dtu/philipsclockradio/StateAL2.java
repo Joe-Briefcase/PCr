@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class StateAL1 extends StateAdapter{
+public class StateAL2 extends StateAdapter{
 
     private Date date;
     private SimpleDateFormat time;
@@ -16,13 +16,13 @@ public class StateAL1 extends StateAdapter{
     public void onEnterState(ContextClockradio context) {
         time = new SimpleDateFormat("HH:mm");
         date = new Date();
-        date = context.observerAlarm.getAL1();
+        date = context.observerAlarm.getAL2();
         context.ui.setDisplayText(time.format(date));
     }
 
     @Override
-    public void onClick_AL1(ContextClockradio context) {
-        context.observerAlarm.setAL1(date);
+    public void onClick_AL2(ContextClockradio context) {
+        context.observerAlarm.setAL2(date);
         context.setState(new StateStandby(context.getTime()));
     }
 

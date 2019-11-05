@@ -12,10 +12,13 @@ public class ContextClockradio {
 
     public static MainUI ui;
     public static SingletonPresets singletonPresets;
+    public static ObserverAlarm observerAlarm;
 
     public ContextClockradio(MainUI context){
         ui = context;
         singletonPresets = new SingletonPresets();
+        observerAlarm = new ObserverAlarm();
+
 
         //Sætter tiden til 12.00, hvis tiden ikke er sat endnu
         if(mTime == null){

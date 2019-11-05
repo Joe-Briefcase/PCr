@@ -74,6 +74,6 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onLongClick_AL2(ContextClockradio context) {
-
+        context.setState(new StateAL2());
     }
 }
