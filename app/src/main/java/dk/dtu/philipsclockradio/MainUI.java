@@ -240,6 +240,7 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
 
     }
 
+    public boolean isRadioPlaying(){return musicPlaying;}
 
     // Denne metode tjekker om en knap er trykket på, eller om den er holdt nede i over 2 sekunder
     // NB: Skal ikke kaldes udefra!

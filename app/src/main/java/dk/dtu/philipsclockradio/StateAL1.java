@@ -9,20 +9,23 @@ public class StateAL1 extends StateAdapter{
     private Date date;
     private SimpleDateFormat time;
     private Calendar cal = Calendar.getInstance();
-    private int hour = 0;
-    private int min = 0;
+    private int hour;
+    private int min;
 
     @Override
     public void onEnterState(ContextClockradio context) {
         time = new SimpleDateFormat("HH:mm");
         date = new Date();
-        date = context.observerAlarm.getAL1();
+        date = context.singletonAlarm.getAL1();
+        cal.setTime(date);
+        hour = cal.get(Calendar.HOUR);
+        min = cal.get(Calendar.MINUTE);
         context.ui.setDisplayText(time.format(date));
     }
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-        context.observerAlarm.setAL1(date);
+        context.singletonAlarm.setAL1(date);
         context.ui.turnOnLED(2);
         context.setState(new StateStandby(context.getTime()));
     }

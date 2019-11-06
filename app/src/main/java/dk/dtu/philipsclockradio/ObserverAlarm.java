@@ -3,42 +3,43 @@ package dk.dtu.philipsclockradio;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ObserverAlarm {
+public class ObserverAlarm extends Observer{
 
-    private Date AL1;
-    private Date AL2;
     private Calendar cal = Calendar.getInstance();
+    private Calendar newCal = Calendar.getInstance();
+    private Date time;
 
-    public ObserverAlarm(){
-        AL1 = new Date();
-        AL2 = new Date();
+    public ObserverAlarm(StateStandby subject, ContextClockradio context){
+        this.subject = subject;
+        this.context = context;
 
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        AL1 = cal.getTime();
-        AL2 = cal.getTime();
     }
 
-    //update - alarm trigger
+//    @Override
+//    public void update() {
+//        cal.setTime(subject.getTime());
+//
+//        newCal.set(Calendar.HOUR, cal.get(Calendar.HOUR));
+//        newCal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
+//
+//        time = newCal.getTime();
+//
+//        if (time.compareTo(context.singletonAlarm.getAL1()) == 0){
+//            subject.triggerAL1();
+//        } else if (time.compareTo(context.singletonAlarm.getAL2()) == 0){
+//            subject.triggerAL2();
+//        }
+//    }
 
-    //notify fra standby
+    @Override
+    public void update(){
 
-    public void setAL1(Date date){
-        AL1 = date;
+        System.out.println(subject.getTime().toString());
+        System.out.println(context.singletonAlarm.getAL1().toString());
+
+        if (subject.getTime().compareTo(context.singletonAlarm.getAL1()) == 0){
+            subject.triggerAL1();
+        }
     }
 
-    public void setAL2(Date date){
-        AL2 = date;
-    }
-
-    public Date getAL1(){
-        return AL1;
-    }
-
-    public Date getAL2(){
-        return AL2;
-    }
 }
