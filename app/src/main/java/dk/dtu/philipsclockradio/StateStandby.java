@@ -1,6 +1,8 @@
 package dk.dtu.philipsclockradio;
 
 import android.os.Handler;
+
+import java.util.Calendar;
 import java.util.Date;
 
 public class StateStandby extends StateAdapter {
@@ -11,6 +13,7 @@ public class StateStandby extends StateAdapter {
     private Observer observer;
     private boolean AL1running = false;
     private boolean AL2running = false;
+    private Calendar cal = Calendar.getInstance();
 
     StateStandby(Date time){
         mTime = time;
@@ -86,9 +89,13 @@ public class StateStandby extends StateAdapter {
 
         if (AL1running == true) {
             AL1running = false;
-            long time = context.singletonAlarm.getAL1().getTime();
-            Date date = new Date();
-            date.setTime(time + (60000 * 9));
+            Date date = context.singletonAlarm.getAL1();
+            cal.setTime(date);
+            int hour = cal.get(Calendar.HOUR);
+            int min = cal.get(Calendar.MINUTE) + 9;
+            cal.set(Calendar.HOUR, hour);
+            cal.set(Calendar.MINUTE, min);
+            date = cal.getTime();
             context.singletonAlarm.setAL1(date);
         } else if (AL2running == true){
             AL2running = false;
@@ -158,14 +165,14 @@ public class StateStandby extends StateAdapter {
     public void onClick_AL2(ContextClockradio context) {
         if (context.singletonAlarm.getAl2State() == 0){
             context.ui.turnOnLED(5);
-            context.singletonAlarm.setAL1state(1);
+            context.singletonAlarm.setAL2state(1);
         } else if (context.singletonAlarm.getAl2State() == 1){
             context.ui.turnOffLED(5);
             context.ui.turnOnLED(4);
-            context.singletonAlarm.setAL1state(2);
+            context.singletonAlarm.setAL2state(2);
         } else if (context.singletonAlarm.getAl2State() == 2){
             context.ui.turnOffLED(4);
-            context.singletonAlarm.setAL1state(0);
+            context.singletonAlarm.setAL2state(0);
         }
     }
 }
