@@ -9,8 +9,6 @@ public class StateStandby extends StateAdapter {
     private static Handler mHandler = new Handler();
     private ContextClockradio mContext;
     private Observer observer;
-    private int AL1State = 0;
-    private int AL2State = 0;
     private boolean AL1running = false;
     private boolean AL2running = false;
 
@@ -54,11 +52,11 @@ public class StateStandby extends StateAdapter {
     }
 
     public void triggerAL1(){
-        mContext.ui.turnOnTextBlink();
-        if (AL1State == 1){
+
+        if (mContext.singletonAlarm.getAl1State() == 1) {
             AL1running = true;
             mContext.ui.turnOnTextBlink();
-        } else if (AL1State == 2){
+        } else if (mContext.singletonAlarm.getAl1State() == 2){
             AL1running = true;
             mContext.ui.turnOnTextBlink();
             mContext.ui.toggleRadioPlaying();
@@ -66,11 +64,11 @@ public class StateStandby extends StateAdapter {
     }
 
     public void triggerAL2(){
-        if (AL2State == 1){
-            AL2running = true;
+        if (mContext.singletonAlarm.getAl2State() == 1) {
+            AL1running = true;
             mContext.ui.turnOnTextBlink();
-        } else if (AL2State == 2){
-            AL2running = true;
+        } else if (mContext.singletonAlarm.getAl2State() == 2){
+            AL1running = true;
             mContext.ui.turnOnTextBlink();
             mContext.ui.toggleRadioPlaying();
         }
@@ -142,29 +140,32 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-        AL1State++;
-        if (AL1State == 1){
+
+        if (context.singletonAlarm.getAl1State() == 0){
             context.ui.turnOnLED(2);
-        } else if (AL1State == 2){
+            context.singletonAlarm.setAL1state(1);
+        } else if (context.singletonAlarm.getAl1State() == 1){
             context.ui.turnOffLED(2);
             context.ui.turnOnLED(1);
-        } else if (AL1State == 3){
+            context.singletonAlarm.setAL1state(2);
+        } else if (context.singletonAlarm.getAl1State() == 2){
             context.ui.turnOffLED(1);
-            AL1State = 0;
+            context.singletonAlarm.setAL1state(0);
         }
     }
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
-        AL2State++;
-        if (AL2State == 1){
+        if (context.singletonAlarm.getAl2State() == 0){
             context.ui.turnOnLED(5);
-        } else if (AL2State == 2){
+            context.singletonAlarm.setAL1state(1);
+        } else if (context.singletonAlarm.getAl2State() == 1){
             context.ui.turnOffLED(5);
             context.ui.turnOnLED(4);
-        } else if (AL2State == 3){
+            context.singletonAlarm.setAL1state(2);
+        } else if (context.singletonAlarm.getAl2State() == 2){
             context.ui.turnOffLED(4);
-            AL2State = 0;
+            context.singletonAlarm.setAL1state(0);
         }
     }
 }
