@@ -91,12 +91,13 @@ public class StateStandby extends StateAdapter {
             AL1running = false;
             Date date = context.singletonAlarm.getAL1();
             cal.setTime(date);
-            int hour = cal.get(Calendar.HOUR);
-            int min = cal.get(Calendar.MINUTE) + 9;
-            cal.set(Calendar.HOUR, hour);
-            cal.set(Calendar.MINUTE, min);
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            int min = cal.get(Calendar.MINUTE);
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, min + 9);
             date = cal.getTime();
             context.singletonAlarm.setAL1(date);
+            System.out.println(date.toString());
         } else if (AL2running == true){
             AL2running = false;
             long time = context.singletonAlarm.getAL2().getTime();

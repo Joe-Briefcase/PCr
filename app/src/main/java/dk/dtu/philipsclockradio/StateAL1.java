@@ -9,8 +9,8 @@ public class StateAL1 extends StateAdapter{
     private Date date;
     private SimpleDateFormat time;
     private Calendar cal = Calendar.getInstance();
-    private int hour;
-    private int min;
+    private int hour = 0;
+    private int min = 0;
 
     @Override
     public void onEnterState(ContextClockradio context) {
@@ -18,8 +18,9 @@ public class StateAL1 extends StateAdapter{
         date = new Date();
         date = context.singletonAlarm.getAL1();
         cal.setTime(date);
-        hour = cal.get(Calendar.HOUR);
-        min = cal.get(Calendar.MINUTE);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, min);
+        date = cal.getTime();
         context.ui.setDisplayText(time.format(date));
     }
 

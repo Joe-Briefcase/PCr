@@ -17,9 +17,9 @@ public class StateAL2 extends StateAdapter{
         time = new SimpleDateFormat("HH:mm");
         date = new Date();
         date = context.singletonAlarm.getAL2();
-        cal.setTime(date);
-        hour = cal.get(Calendar.HOUR);
-        min = cal.get(Calendar.MINUTE);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, min);
+        date = cal.getTime();
         context.ui.setDisplayText(time.format(date));
     }
 
